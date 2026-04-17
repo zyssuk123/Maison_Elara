@@ -1,0 +1,382 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - Maison Elara Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#F9F5EE; --ivory:#F2EBD9; --warm-black:#1A1612; --espresso:#3D2B1F;
+    --gold:#C9A96E; --gold-light:#E8D5B0; --muted:#8A7B6E; --border:rgba(61,43,31,0.12);
+    --surface:#FBF8F3; --sidebar-w:240px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--surface); color:var(--warm-black); display:flex; min-height:100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width:var(--sidebar-w); background:var(--warm-black); position:fixed; top:0; left:0; bottom:0;
+    display:flex; flex-direction:column; overflow-y:auto; z-index:50;
+  }
+  .sidebar-logo { padding:2rem 1.5rem; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .sidebar-logo-text { font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--cream); font-weight:300; }
+  .sidebar-logo-sub { font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(249,245,238,0.35); margin-top:4px; }
+  .sidebar-nav { flex:1; padding:1.5rem 0; }
+  .nav-section { font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(249,245,238,0.25); padding:0 1.5rem; margin:1.5rem 0 0.5rem; }
+  .nav-item {
+    display:flex; align-items:center; gap:0.75rem; padding:10px 1.5rem;
+    color:rgba(249,245,238,0.5); cursor:pointer; transition:all 0.2s;
+    font-size:13px; border-left:3px solid transparent; text-decoration:none;
+  }
+  .nav-item:hover { color:var(--cream); background:rgba(249,245,238,0.04); }
+  .nav-item.active { color:var(--cream); border-left-color:var(--gold); background:rgba(201,169,110,0.06); }
+  .nav-icon { font-size:16px; width:20px; text-align:center; }
+  .sidebar-footer { padding:1.5rem; border-top:1px solid rgba(255,255,255,0.06); }
+  .admin-name { font-size:13px; color:var(--cream); margin-bottom:4px; }
+  .admin-role { font-size:11px; color:rgba(249,245,238,0.4); }
+  .logout-btn { margin-top:12px; background:none; border:1px solid rgba(249,245,238,0.15); color:rgba(249,245,238,0.5); padding:7px 14px; font-size:11px; cursor:pointer; font-family:'DM Sans',sans-serif; letter-spacing:0.08em; transition:all 0.2s; }
+  .logout-btn:hover { color:var(--cream); border-color:rgba(249,245,238,0.4); }
+
+  /* MAIN */
+  .main { margin-left:var(--sidebar-w); flex:1; padding:2.5rem; min-height:100vh; }
+  .page-header { margin-bottom:2.5rem; }
+  .page-title { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:300; margin-bottom:4px; }
+  .page-subtitle { font-size:13px; color:var(--muted); }
+  .page { display:none; }
+  .page.active { display:block; }
+
+  /* STAT CARDS */
+  .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.25rem; margin-bottom:2.5rem; }
+  .stat-card { background:white; padding:1.5rem; border:1px solid var(--border); }
+  .stat-label { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:0.75rem; }
+  .stat-value { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:300; line-height:1; margin-bottom:0.5rem; }
+  .stat-trend { font-size:12px; color:var(--muted); }
+  .stat-trend.up { color:#2D7D46; }
+  .stat-trend.down { color:#C0392B; }
+
+  /* TABLES */
+  .card { background:white; border:1px solid var(--border); margin-bottom:1.5rem; }
+  .card-header { padding:1.25rem 1.5rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .card-title { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; }
+  .card-body { padding:1.5rem; }
+  table { width:100%; border-collapse:collapse; }
+  th { font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); padding:0 12px 10px; text-align:left; border-bottom:1px solid var(--border); font-weight:400; }
+  td { padding:12px; font-size:14px; border-bottom:1px solid var(--border); vertical-align:middle; }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:var(--surface); }
+  .badge { display:inline-flex; align-items:center; padding:3px 10px; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; border-radius:0; }
+  .badge-new { background:#EAF3DE; color:#3B6D11; }
+  .badge-sale { background:#FAEEDA; color:#854F0B; }
+  .badge-limited { background:rgba(201,169,110,0.15); color:#8B6914; }
+  .badge-pending { background:#FFF3E0; color:#E65100; }
+  .badge-shipped { background:#E3F2FD; color:#1565C0; }
+  .badge-delivered { background:#E8F5E9; color:#2E7D32; }
+  .badge-cancelled { background:#FFEBEE; color:#C62828; }
+  .product-thumb { width:50px; height:62px; object-fit:cover; background:var(--ivory); }
+
+  /* FORMS */
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+  .form-group { margin-bottom:1.25rem; }
+  .form-group.full { grid-column:1/-1; }
+  .form-label { display:block; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:7px; }
+  .form-input, .form-select, .form-textarea {
+    width:100%; padding:10px 14px; border:1px solid var(--border); background:white;
+    font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.2s; color:var(--warm-black);
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--gold); }
+  .form-textarea { resize:vertical; min-height:100px; }
+  .btn { padding:10px 24px; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
+  .btn-dark { background:var(--warm-black); color:var(--cream); }
+  .btn-dark:hover { background:var(--espresso); }
+  .btn-outline { background:none; color:var(--warm-black); border:1px solid var(--border); }
+  .btn-outline:hover { background:var(--surface); }
+  .btn-danger { background:#C0392B; color:white; }
+  .btn-sm { padding:6px 14px; font-size:10px; }
+
+  /* SEARCH INPUT */
+  .table-search { display:flex; align-items:center; gap:8px; border:1px solid var(--border); padding:8px 14px; background:white; max-width:280px; }
+  .table-search input { border:none; outline:none; font-size:13px; font-family:'DM Sans',sans-serif; flex:1; background:transparent; }
+
+  /* MODAL */
+  .modal-overlay { position:fixed; inset:0; background:rgba(26,22,18,0.6); z-index:200; display:none; align-items:center; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal-box { background:var(--cream); max-width:640px; width:calc(100% - 3rem); max-height:85vh; overflow-y:auto; }
+  .modal-head { padding:1.5rem 2rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .modal-title { font-family:'Cormorant Garamond',serif; font-size:26px; }
+  .modal-body { padding:2rem; }
+  .modal-close-btn { background:none; border:none; font-size:20px; cursor:pointer; color:var(--muted); }
+
+  /* TOAST */
+  .toast { position:fixed; bottom:2rem; right:2rem; background:var(--warm-black); color:var(--cream); padding:12px 24px; font-size:13px; z-index:400; transform:translateY(80px); transition:transform 0.3s; }
+  .toast.show { transform:translateY(0); }
+
+  /* CHARTS */
+  .chart-bar-wrap { display:flex; flex-direction:column; gap:10px; }
+  .chart-bar-row { display:flex; align-items:center; gap:12px; font-size:13px; }
+  .chart-bar-label { width:120px; text-align:right; color:var(--muted); font-size:12px; flex-shrink:0; }
+  .chart-bar-track { flex:1; height:12px; background:var(--ivory); position:relative; }
+  .chart-bar-fill { height:100%; background:var(--gold); transition:width 0.6s ease; }
+  .chart-bar-val { width:60px; font-size:12px; font-family:'Cormorant Garamond',serif; font-size:16px; }
+
+  @media (max-width:900px) { .stats-grid { grid-template-columns:1fr 1fr; } .form-grid { grid-template-columns:1fr; } }
+  @media (max-width:600px) { .sidebar { display:none; } .main { margin-left:0; padding:1.5rem; } .stats-grid { grid-template-columns:1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-text">Maison Elara</div>
+    <div class="sidebar-logo-sub">Admin Panel</div>
+  </div>
+  <nav class="sidebar-nav">
+    <p class="nav-section">Overview</p>
+    <a class="nav-item active" onclick="showPage('dashboard',this)"><span class="nav-icon">&#9670;</span> Dashboard</a>
+    <a class="nav-item" onclick="showPage('analytics',this)"><span class="nav-icon">&#9673;</span> Analytics</a>
+
+    <p class="nav-section">Catalog</p>
+    <a class="nav-item" onclick="showPage('products',this)"><span class="nav-icon">&#9634;</span> Products</a>
+    <a class="nav-item" onclick="showPage('add-product',this)"><span class="nav-icon">+</span> Add Product</a>
+
+    <p class="nav-section">Sales</p>
+    <a class="nav-item" onclick="showPage('orders',this)"><span class="nav-icon">&#9670;</span> Orders</a>
+
+    <p class="nav-section">Settings</p>
+    <a class="nav-item" onclick="showPage('settings',this)"><span class="nav-icon">&#9678;</span> Settings</a>
+    <a class="nav-item" href="index.html" target="_blank"><span class="nav-icon">&nearr;</span> View Store</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="admin-name" id="admin-name">Admin</div>
+    <div class="admin-role">Store Manager</div>
+    <button class="logout-btn" onclick="logout()">Sign Out</button>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- â•â•â• DASHBOARD â•â•â• -->
+  <div class="page active" id="page-dashboard">
+    <div class="page-header">
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-subtitle">Welcome back, <span id="greeting-name">Admin</span> - here's what's happening today.</p>
+    </div>
+    <div class="stats-grid" id="stats-grid"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">Recent Orders</h2><button class="btn btn-outline btn-sm" onclick="showPage('orders',document.querySelector('.nav-item:nth-of-type(6))'))">View All</button></div>
+        <div class="card-body" id="recent-orders-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">Sales by Category</h2></div>
+        <div class="card-body" id="category-chart"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- â•â•â• ANALYTICS â•â•â• -->
+  <div class="page" id="page-analytics">
+    <div class="page-header">
+      <h1 class="page-title">Analytics</h1>
+      <p class="page-subtitle">Store performance at a glance</p>
+    </div>
+    <div class="stats-grid" id="analytics-stats"></div>
+    <div class="card">
+      <div class="card-header"><h2 class="card-title">Top Selling Products</h2></div>
+      <div class="card-body" id="top-products-chart"></div>
+    </div>
+    <div class="card" style="margin-top:1.5rem">
+      <div class="card-header"><h2 class="card-title">Revenue by Category</h2></div>
+      <div class="card-body" id="revenue-chart"></div>
+    </div>
+  </div>
+
+  <!-- â•â•â• PRODUCTS â•â•â• -->
+  <div class="page" id="page-products">
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+      <div>
+        <h1 class="page-title">Products</h1>
+        <p class="page-subtitle">Manage your bag collection</p>
+      </div>
+      <button class="btn btn-dark" onclick="showPage('add-product',null)">+ Add Product</button>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="table-search"><span>&#128269;</span><input type="text" placeholder="Search products..." oninput="renderProductsTable(this.value)"></div>
+        <span id="product-count" style="font-size:13px;color:var(--muted)"></span>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="products-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- â•â•â• ADD / EDIT PRODUCT â•â•â• -->
+  <div class="page" id="page-add-product">
+    <div class="page-header">
+      <h1 class="page-title" id="product-form-title">Add Product</h1>
+      <p class="page-subtitle">Fill in the details below</p>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <input type="hidden" id="edit-product-id">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Product Name *</label>
+            <input class="form-input" id="f-name" placeholder="e.g. The Riviera Tote">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category *</label>
+            <select class="form-select" id="f-category">
+              <option value="">Select category</option>
+              <option>Tote</option><option>Shoulder</option><option>Crossbody</option>
+              <option>Clutch</option><option>Mini</option><option>Evening</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Price (USD) *</label>
+            <input class="form-input" type="number" id="f-price" placeholder="295">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Original Price (for sale, optional)</label>
+            <input class="form-input" type="number" id="f-original-price" placeholder="Leave empty if not on sale">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Image URL *</label>
+            <input class="form-input" id="f-image" placeholder="https://...">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Description *</label>
+            <textarea class="form-textarea" id="f-desc" placeholder="Describe this bag..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Features (one per line)</label>
+            <textarea class="form-textarea" id="f-features" placeholder="Full-grain Italian leather&#10;Magnetic snap closure&#10;Suede interior lining" style="min-height:80px"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Badge (optional)</label>
+            <select class="form-select" id="f-badge">
+              <option value="">None</option>
+              <option>New</option><option>Sale</option><option>Limited</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-select" id="f-active">
+              <option value="true">Active (Visible in store)</option>
+              <option value="false">Draft (Hidden)</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;margin-top:0.5rem">
+          <button class="btn btn-dark" onclick="saveProduct()">Save Product</button>
+          <button class="btn btn-outline" onclick="clearProductForm()">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- â•â•â• ORDERS â•â•â• -->
+  <div class="page" id="page-orders">
+    <div class="page-header">
+      <h1 class="page-title">Orders</h1>
+      <p class="page-subtitle">Manage and track customer orders</p>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="table-search"><span>&#128269;</span><input type="text" placeholder="Search orders..." oninput="renderOrdersTable(this.value)"></div>
+        <div style="display:flex;gap:8px">
+          <select class="form-select" id="order-filter" onchange="renderOrdersTable()" style="width:auto;padding:8px 14px;font-size:12px">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Order ID</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="orders-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- â•â•â• SETTINGS â•â•â• -->
+  <div class="page" id="page-settings">
+    <div class="page-header">
+      <h1 class="page-title">Settings</h1>
+      <p class="page-subtitle">Manage your store and admin accounts</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">Store Settings</h2></div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Store Name</label>
+            <input class="form-input" id="store-name" value="Maison Elara">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Currency</label>
+            <select class="form-select" id="store-currency">
+              <option>USD ($)</option><option>EUR (&euro;)</option><option>GBP (&pound;)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contact Email</label>
+            <input class="form-input" id="store-email" value="hello@maisonelara.com">
+          </div>
+          <button class="btn btn-dark" onclick="saveStoreSettings()">Save Changes</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">Admin Accounts</h2></div>
+        <div class="card-body" id="admin-accounts-list"></div>
+        <div class="card-body" style="border-top:1px solid var(--border)">
+          <p style="font-size:13px;color:var(--muted);margin-bottom:1rem">Add new admin</p>
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input class="form-input" id="new-admin-user" placeholder="username">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input class="form-input" type="password" id="new-admin-pass" placeholder="password">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Display Name</label>
+            <input class="form-input" id="new-admin-name" placeholder="Full Name">
+          </div>
+          <button class="btn btn-dark" onclick="addAdmin()">Add Admin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="order-modal" onclick="closeOrderModal(event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 class="modal-title" id="order-modal-title">Order Detail</h2>
+      <button class="modal-close-btn" onclick="closeOrderModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="order-modal-body"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="admin-toast"></div>
+
+<script src="assets/admin.js"></script>
+</body>
+</html>
+
+
+

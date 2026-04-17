@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In - Maison Elara</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --cream:#F9F5EE; --warm-black:#1A1612; --gold:#C9A96E; --muted:#8A7B6E; --border:rgba(61,43,31,0.12); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--warm-black); min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .login-wrap { display:grid; grid-template-columns:1fr 1fr; max-width:900px; width:calc(100% - 4rem); min-height:560px; }
+  .login-left { background:url('https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=600&q=80') center/cover; position:relative; }
+  .login-left::after { content:''; position:absolute; inset:0; background:rgba(26,22,18,0.5); }
+  .login-left-text { position:absolute; bottom:2.5rem; left:2.5rem; z-index:1; }
+  .login-logo { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:var(--cream); margin-bottom:0.5rem; }
+  .login-sub { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(249,245,238,0.5); }
+  .login-right { background:var(--cream); padding:3.5rem; display:flex; flex-direction:column; justify-content:center; }
+  .login-eyebrow { font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); margin-bottom:0.75rem; }
+  .login-title { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; margin-bottom:2.5rem; }
+  .form-group { margin-bottom:1.5rem; }
+  label { display:block; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  input[type=text], input[type=password] {
+    width:100%; padding:12px 16px; border:1px solid var(--border); background:white;
+    font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.2s;
+  }
+  input:focus { border-color:var(--gold); }
+  .login-btn { background:var(--warm-black); color:var(--cream); padding:14px; border:none; cursor:pointer; width:100%; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; font-family:'DM Sans',sans-serif; transition:background 0.2s; margin-top:0.5rem; }
+  .login-btn:hover { background:#2C1810; }
+  .error-msg { color:#C0392B; font-size:13px; margin-top:12px; display:none; }
+  .hint { font-size:12px; color:var(--muted); margin-top:1.5rem; line-height:1.6; }
+  .hint code { background:rgba(61,43,31,0.08); padding:2px 6px; font-family:monospace; font-size:11px; }
+  @media (max-width:600px) { .login-wrap { grid-template-columns:1fr; } .login-left { min-height:200px; } }
+</style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-left">
+    <div class="login-left-text">
+      <div class="login-logo">Maison Elara</div>
+      <div class="login-sub">Customer And Admin Access</div>
+    </div>
+  </div>
+  <div class="login-right">
+    <p class="login-eyebrow">Welcome Back</p>
+    <h1 class="login-title">Sign In To Continue</h1>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Your username" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="********" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <button class="login-btn" onclick="login()">Enter Store</button>
+    <p class="error-msg" id="error">Invalid credentials. Please try again.</p>
+    <p class="hint">Demo customer: <code>sara</code> / <code>shop2026</code><br>Demo admin: <code>admin</code> / <code>maison2026</code></p>
+  </div>
+</div>
+<script src="assets/login.js"></script>
+</body>
+</html>
+
+
+

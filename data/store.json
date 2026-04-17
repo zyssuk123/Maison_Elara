@@ -1,0 +1,198 @@
+{
+  "settings": {
+    "storeName": "Maison Elara",
+    "currency": "USD ($)",
+    "contactEmail": "hello@maisonelara.com"
+  },
+  "admins": [
+    {
+      "username": "admin",
+      "password": "maison2026",
+      "name": "Store Manager"
+    }
+  ],
+  "customers": [
+    {
+      "username": "sara",
+      "password": "shop2026",
+      "name": "Sara Bennett",
+      "email": "sara@example.com",
+      "phone": "+1 555 210 9876"
+    }
+  ],
+  "products": [
+    {
+      "id": 2,
+      "name": "Le Croisette Shoulder",
+      "category": "Shoulder",
+      "price": 289,
+      "originalPrice": null,
+      "image": "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=600&q=80",
+      "desc": "Inspired by the sun-drenched boulevards of Cannes. Adjustable chain strap, quilted leather exterior, and a gold-toned closure that catches the light.",
+      "colors": [
+        "#2C1810",
+        "#D4B896",
+        "#1B3A5C"
+      ],
+      "features": [
+        "Quilted calfskin leather",
+        "Gold-tone hardware",
+        "Chain strap adjustable to 3 lengths",
+        "Card slot interior pocket"
+      ],
+      "badge": null,
+      "active": true
+    },
+    {
+      "id": 3,
+      "name": "Soir Clutch",
+      "category": "Clutch",
+      "price": 185,
+      "originalPrice": 240,
+      "image": "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80",
+      "desc": "Evening perfection. This sleek satin-finished clutch holds your essentials with understated grace. Detachable wrist strap included.",
+      "colors": [
+        "#1A1612",
+        "#8B8B8B",
+        "#C9A96E"
+      ],
+      "features": [
+        "Satin-finish leather",
+        "Detachable wrist strap",
+        "Interior mirror",
+        "Push-lock closure"
+      ],
+      "badge": "Sale",
+      "active": true
+    },
+    {
+      "id": 4,
+      "name": "Nomade Crossbody",
+      "category": "Crossbody",
+      "price": 225,
+      "originalPrice": null,
+      "image": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=80",
+      "desc": "Freedom in motion. The Nomade crossbody features a wide adjustable strap, zip closure, and enough room for everything you need throughout the day.",
+      "colors": [
+        "#5C3A1E",
+        "#1A1612",
+        "#6B8C6B"
+      ],
+      "features": [
+        "Pebbled grain leather",
+        "Adjustable webbing strap",
+        "Zip and snap pockets",
+        "RFID-blocking card slot"
+      ],
+      "badge": "New",
+      "active": true
+    },
+    {
+      "id": 5,
+      "name": "Petite Madeleine Mini",
+      "category": "Mini",
+      "price": 165,
+      "originalPrice": null,
+      "image": "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=600&q=80",
+      "desc": "The mini bag reimagined. Compact but capacious in spirit, this tiny treasure holds a phone, card, and keys with absolute elegance.",
+      "colors": [
+        "#C9A96E",
+        "#E8D5B0",
+        "#1A1612"
+      ],
+      "features": [
+        "Hand-stitched leather",
+        "Detachable chain strap",
+        "Interior zip pocket",
+        "Dust bag included"
+      ],
+      "badge": null,
+      "active": true
+    },
+    {
+      "id": 6,
+      "name": "Nuit Etoilee Evening",
+      "category": "Evening",
+      "price": 420,
+      "originalPrice": null,
+      "image": "https://images.unsplash.com/photo-1601924638867-3a6de6b7a500?w=600&q=80",
+      "desc": "A constellation of hand-placed crystals on supple nappa leather. For the evenings that demand you shine.",
+      "colors": [
+        "#1A1612",
+        "#C9A96E",
+        "#2C1810"
+      ],
+      "features": [
+        "Nappa leather base",
+        "Hand-placed crystal embellishment",
+        "Silk interior lining",
+        "Comes with luxury dust bag"
+      ],
+      "badge": "Limited",
+      "active": true
+    },
+    {
+      "id": 7,
+      "name": "Boulevard Tote Grande",
+      "category": "Tote",
+      "price": 385,
+      "originalPrice": null,
+      "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=600&q=80",
+      "desc": "The ultimate work-to-weekend bag. Fits a 13-inch laptop, has a hidden back pocket, and the structured base never touches the floor.",
+      "colors": [
+        "#1A1612",
+        "#3D2B1F",
+        "#B8A99A"
+      ],
+      "features": [
+        "Vegetable-tanned leather",
+        "Laptop sleeve interior",
+        "Feet for protection",
+        "Zip top closure"
+      ],
+      "badge": null,
+      "active": true
+    },
+    {
+      "id": 8,
+      "name": "Calin Shoulder Mini",
+      "category": "Shoulder",
+      "price": 245,
+      "originalPrice": 310,
+      "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80",
+      "desc": "A smaller version of our beloved Calin. All the charm, compressed into a compact silhouette that transitions from day to night effortlessly.",
+      "colors": [
+        "#D4B896",
+        "#C9A96E",
+        "#1A1612"
+      ],
+      "features": [
+        "Vegetable-tanned calf leather",
+        "Antique gold hardware",
+        "Dual compartment interior",
+        "Crossbody strap included"
+      ],
+      "badge": "Sale",
+      "active": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-1776435350183",
+      "date": "2026-04-17T14:15:50.183Z",
+      "items": [
+        {
+          "id": 2,
+          "name": "Le Croisette Shoulder",
+          "price": 289,
+          "image": "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=600&q=80",
+          "category": "Shoulder",
+          "qty": 1
+        }
+      ],
+      "total": 289,
+      "status": "pending",
+      "customer": "vansu"
+    }
+  ]
+}

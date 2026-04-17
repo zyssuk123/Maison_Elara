@@ -1,0 +1,577 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAISON ELARA - Women's Luxury Bags</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F9F5EE;
+    --ivory: #F2EBD9;
+    --warm-black: #1A1612;
+    --espresso: #3D2B1F;
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --muted: #8A7B6E;
+    --border: rgba(61,43,31,0.12);
+    --surface: #FBF8F3;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--warm-black); cursor: default; }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 72px;
+    background: rgba(249,245,238,0.92); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-black); text-decoration: none; }
+  .nav-links { display: flex; align-items: center; gap: 2.5rem; }
+  .nav-links a { font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-decoration: none; color: var(--muted); transition: color 0.2s; text-transform: uppercase; }
+  .nav-links a:hover { color: var(--warm-black); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-icon { background: none; border: none; cursor: pointer; color: var(--warm-black); font-size: 18px; position: relative; }
+  .icon-search {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    position: relative;
+  }
+  .icon-search::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 2px;
+    background: currentColor;
+    right: -5px;
+    bottom: -1px;
+    transform: rotate(45deg);
+    border-radius: 999px;
+  }
+  .cart-badge {
+    position: absolute; top: -6px; right: -8px;
+    background: var(--gold); color: white; border-radius: 50%;
+    width: 18px; height: 18px; font-size: 10px; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+  }
+  .nav-btn { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 20px; border: 1px solid var(--warm-black); background: none; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; color: var(--warm-black); text-decoration: none; display: inline-flex; align-items: center; }
+  .nav-btn:hover { background: var(--warm-black); color: var(--cream); }
+  .nav-btn.hidden { display: none; }
+  
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 72px 3rem 0;
+    position: relative; overflow: hidden;
+    background: var(--cream);
+  }
+  .hero-bg-text {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-family: 'Cormorant Garamond', serif; font-size: 28vw; font-weight: 300;
+    color: rgba(201,169,110,0.06); white-space: nowrap; pointer-events: none; letter-spacing: -0.02em;
+    user-select: none;
+  }
+  .hero-content { max-width: 600px; z-index: 1; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(52px,7vw,96px); font-weight: 300; line-height: 1.0; margin-bottom: 2rem; }
+  .hero-title em { font-style: italic; }
+  .hero-desc { font-size: 15px; line-height: 1.8; color: var(--muted); margin-bottom: 3rem; max-width: 440px; }
+  .hero-actions { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--warm-black); color: var(--cream); padding: 14px 36px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; text-decoration: none; display: inline-block; }
+  .btn-primary:hover { background: var(--espresso); }
+  .btn-ghost { background: none; color: var(--warm-black); padding: 14px 0; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; border-bottom: 1px solid currentColor; transition: all 0.2s; text-decoration: none; }
+  .hero-stats { position: absolute; right: 3rem; bottom: 4rem; display: flex; flex-direction: column; gap: 2rem; }
+  .stat { text-align: right; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; line-height: 1; }
+  .stat-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .hero-line { position: absolute; right: 3rem; top: 72px; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold-light), transparent); }
+
+  /* MARQUEE */
+  .marquee-wrap { padding: 1.5rem 0; background: var(--warm-black); overflow: hidden; }
+  .marquee-inner { display: flex; gap: 4rem; animation: marquee 24s linear infinite; white-space: nowrap; }
+  .marquee-item { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; color: var(--gold-light); font-style: italic; letter-spacing: 0.06em; }
+  .marquee-dot { color: var(--gold); }
+  @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+
+  /* SECTION HEADERS */
+  .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 3rem; }
+  .section-eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px,4vw,52px); font-weight: 300; line-height: 1.1; }
+  .section-title em { font-style: italic; }
+  .view-all { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; font-family: 'DM Sans', sans-serif; }
+  .view-all:hover { color: var(--warm-black); border-color: var(--warm-black); }
+  section { padding: 6rem 3rem; }
+
+  /* FILTERS */
+  .filters { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+  .filter-btn { padding: 8px 20px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--border); background: none; cursor: pointer; font-family: 'DM Sans', sans-serif; color: var(--muted); transition: all 0.2s; }
+  .filter-btn.active, .filter-btn:hover { background: var(--warm-black); color: var(--cream); border-color: var(--warm-black); }
+
+  /* PRODUCT GRID */
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; }
+  .product-card { cursor: pointer; }
+  .product-img-wrap {
+    position: relative; aspect-ratio: 3/4; background: var(--ivory);
+    overflow: hidden; margin-bottom: 1.25rem;
+  }
+  .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .product-card:hover .product-img-wrap img { transform: scale(1.04); }
+  .product-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    background: var(--warm-black); color: var(--cream);
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 12px;
+  }
+  .product-badge.sale { background: var(--gold); }
+  .product-wishlist {
+    position: absolute; top: 1rem; right: 1rem;
+    background: rgba(249,245,238,0.9); border: none; border-radius: 50%;
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px; transition: all 0.2s;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .product-card:hover .product-wishlist { opacity: 1; }
+  .product-wishlist:hover { background: white; }
+  .quick-add {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(26,22,18,0.9); color: var(--cream);
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 12px; text-align: center; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .product-card:hover .quick-add { transform: translateY(0); }
+  .product-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; margin-bottom: 0.4rem; }
+  .product-category { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+  .product-price { font-size: 16px; font-weight: 400; }
+  .product-price .original { text-decoration: line-through; color: var(--muted); margin-right: 8px; font-size: 14px; }
+  .product-price .sale-price { color: var(--gold); }
+
+  /* FEATURED / EDITORIAL */
+  .editorial { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 600px; }
+  .editorial-img { background: var(--ivory); position: relative; overflow: hidden; }
+  .editorial-img img { width: 100%; height: 100%; object-fit: cover; }
+  .editorial-content { background: var(--warm-black); padding: 5rem; display: flex; flex-direction: column; justify-content: center; }
+  .editorial-eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; }
+  .editorial-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px,4vw,64px); font-weight: 300; line-height: 1.1; color: var(--cream); margin-bottom: 1.5rem; }
+  .editorial-title em { font-style: italic; }
+  .editorial-text { font-size: 15px; line-height: 1.8; color: rgba(249,245,238,0.6); margin-bottom: 2.5rem; }
+
+  /* PRODUCT DETAIL MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(26,22,18,0.6);
+    z-index: 200; display: none; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--cream); max-width: 900px; width: calc(100% - 4rem);
+    max-height: 90vh; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .modal-img { background: var(--ivory); min-height: 500px; }
+  .modal-img img { width: 100%; height: 100%; object-fit: cover; }
+  .modal-info { padding: 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; align-self: flex-end; color: var(--muted); }
+  .modal-category { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .modal-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 400; }
+  .modal-price { font-size: 22px; }
+  .modal-desc { font-size: 14px; line-height: 1.8; color: var(--muted); }
+  .modal-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .color-swatches { display: flex; gap: 8px; }
+  .swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; }
+  .swatch.active { border-color: var(--warm-black); }
+  .modal-add { background: var(--warm-black); color: var(--cream); padding: 14px; border: none; cursor: pointer; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; margin-top: auto; transition: background 0.2s; }
+  .modal-add:hover { background: var(--espresso); }
+  .modal-features { display: flex; flex-direction: column; gap: 6px; }
+  .modal-feature { font-size: 13px; color: var(--muted); display: flex; gap: 8px; }
+  .modal-feature::before { content: '-'; color: var(--gold); }
+
+  /* CART SIDEBAR */
+  .cart-sidebar {
+    position: fixed; right: 0; top: 0; bottom: 0; width: 420px;
+    background: var(--cream); z-index: 300; transform: translateX(100%);
+    transition: transform 0.4s ease; display: flex; flex-direction: column;
+    border-left: 1px solid var(--border);
+  }
+  .cart-sidebar.open { transform: translateX(0); }
+  .cart-overlay { position: fixed; inset: 0; background: rgba(26,22,18,0.4); z-index: 299; display: none; }
+  .cart-overlay.open { display: block; }
+  .cart-header { padding: 2rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .cart-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; }
+  .cart-items { flex: 1; overflow-y: auto; padding: 1.5rem 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .cart-item { display: flex; gap: 1rem; align-items: flex-start; }
+  .cart-item-img { width: 80px; height: 100px; object-fit: cover; background: var(--ivory); flex-shrink: 0; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; margin-bottom: 4px; }
+  .cart-item-price { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+  .cart-item-qty { display: flex; align-items: center; gap: 10px; }
+  .qty-btn { background: none; border: 1px solid var(--border); width: 28px; height: 28px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+  .qty-display { font-size: 14px; min-width: 24px; text-align: center; }
+  .cart-item-remove { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 18px; padding: 4px; }
+  .cart-footer { padding: 2rem; border-top: 1px solid var(--border); }
+  .cart-subtotal { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 1.5rem; }
+  .cart-subtotal strong { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; }
+  .cart-empty { text-align: center; padding: 4rem 2rem; color: var(--muted); }
+  .cart-empty-icon { font-size: 48px; margin-bottom: 1rem; }
+  .cart-empty-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--warm-black); color: var(--cream); padding: 12px 24px; font-size: 13px; letter-spacing: 0.04em; z-index: 400; transition: transform 0.3s ease; white-space: nowrap; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* FOOTER */
+  footer { background: var(--warm-black); padding: 5rem 3rem 2rem; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--cream); margin-bottom: 1rem; }
+  .footer-tagline { font-size: 13px; color: rgba(249,245,238,0.4); line-height: 1.7; max-width: 240px; }
+  .footer-col-title { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .footer-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .footer-links a { font-size: 13px; color: rgba(249,245,238,0.5); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-bottom { border-top: 1px solid rgba(249,245,238,0.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 12px; color: rgba(249,245,238,0.3); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 72px 1.5rem 0; min-height: 90vh; }
+    .hero-stats { display: none; }
+    .editorial { grid-template-columns: 1fr; }
+    .editorial-content { padding: 3rem 1.5rem; }
+    .modal { grid-template-columns: 1fr; }
+    .modal-img { min-height: 300px; }
+    .cart-sidebar { width: 100%; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  }
+  .search-bar { display: flex; align-items: center; border: 1px solid var(--border); padding: 8px 16px; gap: 8px; margin-bottom: 2rem; background: white; max-width: 400px; }
+  .search-bar input { border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 14px; flex: 1; background: transparent; }
+  .search-bar span { color: var(--muted); font-size: 16px; display: inline-flex; }
+  .checkout-modal { max-width: 760px; }
+  .checkout-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; }
+  .checkout-group { margin-bottom: 1rem; }
+  .checkout-label { display:block; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  .checkout-input, .checkout-textarea {
+    width:100%; padding:12px 14px; border:1px solid var(--border); background:white;
+    font-family:'DM Sans', sans-serif; font-size:14px; outline:none;
+  }
+  .checkout-textarea { min-height: 92px; resize: vertical; }
+  .checkout-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .payment-options { display:grid; gap:0.75rem; margin-bottom:1rem; }
+  .payment-option {
+    border:1px solid var(--border); padding:1rem; cursor:pointer; display:flex; gap:0.75rem; align-items:flex-start; background:white;
+  }
+  .payment-option.active { border-color: var(--warm-black); background: var(--surface); }
+  .payment-option input { margin-top: 3px; }
+  .payment-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .payment-copy { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+  .order-summary { background: var(--surface); padding: 1.5rem; border: 1px solid var(--border); }
+  .summary-line { display:flex; justify-content:space-between; gap:1rem; font-size:14px; margin-bottom:0.75rem; }
+  .summary-items { display:grid; gap:0.75rem; margin:1rem 0; }
+  .summary-item { display:flex; justify-content:space-between; gap:1rem; font-size:13px; color:var(--muted); }
+  .card-fields { display:none; }
+  .card-fields.open { display:block; }
+  .checkout-note { font-size:12px; color:var(--muted); line-height:1.6; margin-top:0.5rem; }
+  @media (max-width: 768px) {
+    .checkout-grid { grid-template-columns: 1fr; }
+    .checkout-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="nav-logo" href="#">Maison Elara</a>
+  <div class="nav-links">
+    <a href="#collection" onclick="scrollToSection('#collection')">New Arrivals</a>
+    <a href="#collection" onclick="scrollToSection('#collection')">Collection</a>
+    <a href="#editorial" onclick="scrollToSection('#editorial')">Editorial</a>
+    <a href="#editorial" onclick="scrollToSection('#editorial')">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-icon" onclick="toggleSearch()" title="Search"><span class="icon-search" aria-hidden="true"></span></button>
+    <button class="nav-icon" onclick="openCart()" title="Cart">
+      &#128717;
+      <span class="cart-badge" id="cart-count">0</span>
+    </button>
+    <a class="nav-btn" id="account-link" href="login.html">Login</a>
+    <a class="nav-btn hidden" id="admin-link" href="dashboard.html">Admin</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">ELARA</div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">New Collection - Spring 2026</p>
+    <h1 class="hero-title">The Art of<br>Carried <em>Beauty</em></h1>
+    <p class="hero-desc">Crafted for women who move through the world with intention. Each piece is an artifact - made to carry your life beautifully.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#collection" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">Shop Collection</a>
+      <button class="btn-ghost" onclick="document.getElementById('editorial').scrollIntoView({behavior:'smooth'})">Our Story</button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">14</div>
+      <div class="stat-label">Years of Craft</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3K+</div>
+      <div class="stat-label">Happy Owners</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="marquee-item">Tote Bags</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Shoulder Bags</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Clutches</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Crossbody</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Mini Bags</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Evening Bags</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Tote Bags</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Shoulder Bags</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Clutches</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Crossbody</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Mini Bags</span><span class="marquee-dot"> &#10022; </span>
+    <span class="marquee-item">Evening Bags</span><span class="marquee-dot"> &#10022; </span>
+  </div>
+</div>
+
+<!-- COLLECTION -->
+<section id="collection">
+  <div class="section-header">
+    <div>
+      <p class="section-eyebrow">The Collection</p>
+      <h2 class="section-title">Curated <em>Pieces</em></h2>
+    </div>
+    <button class="view-all" onclick="filterProducts('All')">View All &rarr;</button>
+  </div>
+
+  <div id="search-wrap" style="display:none">
+    <div class="search-bar">
+      <span><span class="icon-search" aria-hidden="true"></span></span>
+      <input type="text" id="search-input" placeholder="Search bags..." oninput="filterProducts('All')">
+    </div>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter-btn active" onclick="filterProducts('All', this)">All</button>
+    <button class="filter-btn" onclick="filterProducts('Tote', this)">Tote</button>
+    <button class="filter-btn" onclick="filterProducts('Shoulder', this)">Shoulder</button>
+    <button class="filter-btn" onclick="filterProducts('Crossbody', this)">Crossbody</button>
+    <button class="filter-btn" onclick="filterProducts('Clutch', this)">Clutch</button>
+    <button class="filter-btn" onclick="filterProducts('Mini', this)">Mini</button>
+    <button class="filter-btn" onclick="filterProducts('Evening', this)">Evening</button>
+  </div>
+
+  <div class="products-grid" id="products-grid"></div>
+</section>
+
+<!-- EDITORIAL -->
+<section id="editorial" style="padding:0">
+  <div class="editorial">
+    <div class="editorial-img">
+      <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=700&q=80" alt="Luxury bag atelier" onerror="this.style.background='#E8D5B0'">
+    </div>
+    <div class="editorial-content">
+      <p class="editorial-eyebrow">Our Philosophy</p>
+      <h2 class="editorial-title">Slow Fashion,<br><em>Lasting Beauty</em></h2>
+      <p class="editorial-text">Every Maison Elara bag is the result of a dialogue between artisan and material. We source only the finest leathers from family-owned tanneries in Morocco and Italy, because where a thing is made shapes what it becomes.</p>
+      <a class="btn-primary" href="#">Discover Our Story</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-img">
+      <img id="modal-img" src="" alt="">
+    </div>
+    <div class="modal-info">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <p class="modal-category" id="modal-category"></p>
+      <h2 class="modal-name" id="modal-name"></h2>
+      <p class="modal-price" id="modal-price"></p>
+      <p class="modal-desc" id="modal-desc"></p>
+      <div>
+        <p class="modal-label">Available Colors</p>
+        <div class="color-swatches" id="modal-colors"></div>
+      </div>
+      <div class="modal-features" id="modal-features"></div>
+      <button class="modal-add" id="modal-add-btn" onclick="addFromModal()">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <h2 class="cart-title">Your Bag</h2>
+    <button class="nav-icon" onclick="closeCart()" style="font-size:20px">&times;</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <strong id="cart-total">$0</strong>
+    </div>
+    <button class="btn-primary" style="width:100%;text-align:center;margin-bottom:12px" onclick="checkout()">Proceed to Checkout</button>
+    <button class="btn-ghost" style="width:100%;text-align:center" onclick="closeCart()">Continue Shopping</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="checkout-modal" onclick="closeCheckoutModal(event)">
+  <div class="modal checkout-modal">
+    <div class="modal-info" style="grid-column:1/-1">
+      <button class="modal-close" onclick="closeCheckoutModal()">&times;</button>
+      <div class="checkout-grid">
+        <div>
+          <p class="modal-category">Checkout</p>
+          <h2 class="modal-name">Complete your order</h2>
+          <div class="checkout-row">
+            <div class="checkout-group">
+              <label class="checkout-label" for="checkout-name">Full Name</label>
+              <input class="checkout-input" id="checkout-name" placeholder="Your full name">
+            </div>
+            <div class="checkout-group">
+              <label class="checkout-label" for="checkout-email">Email</label>
+              <input class="checkout-input" id="checkout-email" type="email" placeholder="name@example.com">
+            </div>
+          </div>
+          <div class="checkout-row">
+            <div class="checkout-group">
+              <label class="checkout-label" for="checkout-phone">Phone</label>
+              <input class="checkout-input" id="checkout-phone" placeholder="+1 555 000 0000">
+            </div>
+            <div class="checkout-group">
+              <label class="checkout-label" for="checkout-city">City</label>
+              <input class="checkout-input" id="checkout-city" placeholder="Your city">
+            </div>
+          </div>
+          <div class="checkout-group">
+            <label class="checkout-label" for="checkout-address">Address</label>
+            <textarea class="checkout-textarea" id="checkout-address" placeholder="Street, building, apartment, delivery instructions"></textarea>
+          </div>
+          <div class="checkout-group">
+            <label class="checkout-label" for="checkout-note">Order Note</label>
+            <textarea class="checkout-textarea" id="checkout-note" placeholder="Optional note for your order"></textarea>
+          </div>
+        </div>
+        <div>
+          <div class="order-summary">
+            <p class="checkout-label">Payment Method</p>
+            <div class="payment-options">
+              <label class="payment-option active" data-payment-option="online_card">
+                <input type="radio" name="payment-method" value="online_card" checked onchange="togglePaymentFields()">
+                <div>
+                  <div class="payment-title">Online Payment</div>
+                  <div class="payment-copy">Pay now with card and confirm the order instantly.</div>
+                </div>
+              </label>
+              <label class="payment-option" data-payment-option="cash_on_delivery">
+                <input type="radio" name="payment-method" value="cash_on_delivery" onchange="togglePaymentFields()">
+                <div>
+                  <div class="payment-title">Pay on Delivery</div>
+                  <div class="payment-copy">Place the order now and pay the courier when it arrives.</div>
+                </div>
+              </label>
+            </div>
+            <div class="card-fields open" id="card-fields">
+              <div class="checkout-group">
+                <label class="checkout-label" for="card-name">Name on Card</label>
+                <input class="checkout-input" id="card-name" placeholder="Card holder name">
+              </div>
+              <div class="checkout-group">
+                <label class="checkout-label" for="card-number">Card Number</label>
+                <input class="checkout-input" id="card-number" placeholder="4242 4242 4242 4242">
+              </div>
+              <div class="checkout-row">
+                <div class="checkout-group">
+                  <label class="checkout-label" for="card-expiry">Expiry</label>
+                  <input class="checkout-input" id="card-expiry" placeholder="MM/YY">
+                </div>
+                <div class="checkout-group">
+                  <label class="checkout-label" for="card-cvc">CVC</label>
+                  <input class="checkout-input" id="card-cvc" placeholder="123">
+                </div>
+              </div>
+            </div>
+            <div class="summary-items" id="checkout-summary-items"></div>
+            <div class="summary-line">
+              <span>Subtotal</span>
+              <strong id="checkout-summary-total">$0</strong>
+            </div>
+            <button class="btn-primary" style="width:100%;text-align:center;margin-top:1rem" onclick="submitCheckout()">Place Order</button>
+            <p class="checkout-note">This demo stores the order in your local backend. Online card checkout is simulated for now.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Maison Elara</div>
+      <p class="footer-tagline">Crafted luxury bags for the discerning woman. Made with intention, carried with grace.</p>
+    </div>
+    <div>
+      <p class="footer-col-title">Shop</p>
+      <div class="footer-links">
+        <a>New Arrivals</a>
+        <a>Tote Bags</a>
+        <a>Shoulder Bags</a>
+        <a>Clutches</a>
+        <a>Sale</a>
+      </div>
+    </div>
+    <div>
+      <p class="footer-col-title">Help</p>
+      <div class="footer-links">
+        <a>Shipping & Returns</a>
+        <a>Size Guide</a>
+        <a>Care Guide</a>
+        <a>Contact Us</a>
+      </div>
+    </div>
+    <div>
+      <p class="footer-col-title">Company</p>
+      <div class="footer-links">
+        <a>Our Story</a>
+        <a>Sustainability</a>
+        <a>Press</a>
+        <a href="login.html">Account Login</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2026 Maison Elara. All rights reserved.</p>
+    <p class="footer-copy">Crafted with care - Three-Click Rule</p>
+  </div>
+</footer>
+
+<script src="assets/store.js"></script>
+</body>
+</html>
+
+
